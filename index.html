@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CorteStudio · Editor de Vídeo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="logo"><span class="mark">▶</span><span>Corte<b>Studio</b></span></div>
+  <input id="projName" value="Projeto sem título" aria-label="Nome do projeto">
+  <div class="sp"></div>
+  <div class="grp"><button id="undo" class="ic" title="Desfazer (Ctrl+Z)">↶</button><button id="redo" class="ic" title="Refazer (Ctrl+Y)">↷</button></div>
+  <button id="save" title="Salvar projeto">💾<span class="t"> Salvar</span></button>
+  <button id="open" title="Abrir projeto">📂<span class="t"> Abrir</span></button>
+  <input type="file" id="openFile" accept=".json,application/json" hidden>
+  <button id="export" class="primary" title="Exportar vídeo">⬆<span class="t"> Exportar</span></button>
+</header>
+
+<main>
+  <section id="lib" class="panel">
+    <h3>Biblioteca</h3>
+    <button id="import" class="wide">＋ Importar arquivos</button>
+    <input type="file" id="files" multiple accept="video/*,image/*,audio/*" hidden>
+    <div id="chips"><button data-f="all" class="on">Tudo</button><button data-f="video">Vídeo</button><button data-f="image">Imagem</button><button data-f="audio">Áudio</button></div>
+    <div id="mediaList"></div>
+  </section>
+
+  <section id="stage" class="panel">
+    <div class="cvw">
+      <canvas id="cv" width="1280" height="720"></canvas>
+      <button id="bigplay" class="big" title="Reproduzir">▶</button>
+      <span class="badge">1280×720 · 16:9</span>
+    </div>
+    <div id="bar"><div id="barf"></div></div>
+    <div class="controls">
+      <button id="home" class="ic" title="Início">⏮</button>
+      <button id="play" class="ic pp" title="Reproduzir/Pausar (Espaço)">▶</button>
+      <span id="tc">00:00.0 / 00:00.0</span>
+      <div class="sp"></div>
+      <label class="vol">🔊 <input type="range" id="master" min="0" max="1" step="0.01" value="1"></label>
+    </div>
+  </section>
+
+  <section id="props" class="panel">
+    <h3>Propriedades</h3>
+    <div id="propBody"></div>
+  </section>
+</main>
+
+<section id="tl">
+  <div class="tbar">
+    <button id="addText" title="Adicionar texto">T<span class="t"> Texto</span></button>
+    <button id="split" title="Dividir no cursor (S)">✂<span class="t"> Dividir</span></button>
+    <button id="del" title="Excluir (Delete)">🗑<span class="t"> Excluir</span></button>
+    <div class="sp"></div>
+    <label class="vol">🔍 <input type="range" id="zoom" min="20" max="200" value="60"></label>
+  </div>
+  <div id="tlBody">
+    <div id="labels"><div>🎞 <span class="t">Vídeo</span></div><div>🖼 <span class="t">Sobrepor</span></div><div>🎵 <span class="t">Áudio</span></div></div>
+    <div id="tlScroll">
+      <div id="tlInner">
+        <div id="ruler"></div>
+        <div class="lane" data-t="0"></div>
+        <div class="lane" data-t="1"></div>
+        <div class="lane" data-t="2"></div>
+        <div id="ph"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="ov" hidden>
+  <div class="box">
+    <p>Exportando em tempo real…<br><small>Mantenha esta aba aberta.</small></p>
+    <progress id="pg" max="1" value="0"></progress>
+    <button id="cancel">Cancelar</button>
+  </div>
+</div>
+<div id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
